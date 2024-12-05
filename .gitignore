@@ -1,0 +1,9 @@
+# Ignore all `.log` files
+*.log
+*.obj
+*.pth
+
+# Ignore the `node_modules` folder
+
+# Ignore specific file
+
