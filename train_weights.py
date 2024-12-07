@@ -62,14 +62,15 @@ if __name__ == '__main__':
     obj_no = 12
     no_of_rotations = 1
     mode = 'normal'
-    obj_path_pre = 'datasets/rot_after_inf/'
+    obj_path_pre = 'datasets/for_4_objs/'
+    obj_list = [obj_path_pre+f"{idx}.obj" for idx in [2,3,0,1]]
     # obj_path_pre_list = [obj_path_pre+'/'
     #                      ,obj_path_pre+'_180/'
     #                     #,obj_path_pre+'_270/'
     #                     #  ,obj_path_pre+'_360/'
     #                      ]
     workspace1 = f'hash_workspace_obj{obj_no}_{n}_{d}_{hashmap_size}/'
-    _n = 2
+    _n = 4
     from sdf.network_tcnn import SDFNetwork            
     
     tcnn_network = torch.load(workspace1+'GT_mlp.pth')
@@ -89,13 +90,13 @@ if __name__ == '__main__':
     
     dim = models[0].encoder.hash_table.shape[0]	
     print(f'W:{dim}x{dim}')    
-    # W = nn.Parameter(torch.randn(dim, dim, device='cuda', requires_grad=True))  #w-commment
+    W = nn.Parameter(torch.randn(dim, dim, device='cuda', requires_grad=True))  #w-commment
     # N = nn.Parameter(torch.randn(dim, dim2, device='cuda', requires_grad=True))
     # M = nn.Parameter(torch.randn(dim2, dim, device='cuda', requires_grad=True))
     
-    W = torch.load(workspace1+'W.pth')  
+    # W = torch.load(workspace1+'W.pth')  
     
-    lr = 1e-5
+    lr = 1e-3
 
     from sdf.provider import SDFDataset
     from loss import mape_loss
@@ -113,7 +114,7 @@ if __name__ == '__main__':
     
     
     for i in range(_n):
-        train_dataset = SDFDataset(obj_path_pre+f'{i}.obj', size=100, num_samples=2**18,sample_ratio_n=n,sample_ratio_d=d)
+        train_dataset = SDFDataset(obj_list[i], size=100, num_samples=2**18,sample_ratio_n=n,sample_ratio_d=d)
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1, shuffle=True)
         train_datasets.append(train_dataset)
         train_loaders.append(train_loader)
@@ -137,7 +138,7 @@ if __name__ == '__main__':
 
     scheduler = lambda optimizer: optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
     # scheduler = lambda optimizer: torch.optim.lr_scheduler.MultiStepLR(optimizer,[6,6,4,4,2], gamma=0.1, last_epoch=-1)
-    subset_n = 2
+    subset_n = 4
     trainer = Trainer('ngp', _n, models,W,N,M, B1,workspace=workspace1,enc_optimizer=enc_optimizer,  net_optimizer=net_optimizer, w_optimizer = w_optimizer, criterion=criterion, ema_decay=0.95, fp16=False, lr_scheduler=scheduler, use_checkpoint='latest', eval_interval=1,scheduler_update_every_step=False)
     trainer.w_train(mode,False,train_loaders,500,subset_n)
 

@@ -87,7 +87,7 @@ if __name__ == '__main__':
     no_of_rots = 1
     # obj_path_pre = 'GT_objs/'
     workspace1 = f'hash_workspace_obj12_7_8_10/'
-    _n = 2
+    _n = 4
     from sdf.network_tcnn import SDFNetwork            
     tcnn_network = tcnn.Network(
                                         n_input_dims=32,
@@ -130,7 +130,7 @@ if __name__ == '__main__':
     # N = torch.load('hash_workspace_obj12_7_8_10/N.pth')
     # M = torch.load('hash_workspace_obj12_7_8_10/M.pth')
     # w = torch.load('w.pth')
-    W= torch.load(workspace1+'W.pth')
+    # W= torch.load(workspace1+'W.pth')
     # W = torch.matmul(W,W)# W2 = 2*W
     
     #trainer.save_mesh(os.path.join(workspace1, 'results', 'output.ply'), 1024)

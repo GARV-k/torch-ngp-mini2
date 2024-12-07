@@ -59,11 +59,11 @@ def rotate_vertices_y(input_folder, output_folder, angle_degrees=90):
     print(f"Rotated .obj files have been saved to: {output_folder}")
 
 # Example usage
-folder_path = "datasets/for_2_objs/"  # Replace with your folder path
+folder_path = "datasets/rotated_objs_360/"  # Replace with your folder path
 # for idx in [10,20,30,40,50,60]:
-for idx in [90]:
-    output_folder_path = f"datasets/rot_after_inf/"  # Replace with your output folder path
-    rotate_vertices_y(folder_path, output_folder_path,180)
+# for idx in [90]:
+output_folder_path = f"datasets/rotated_objs_180"  # Replace with your output folder path
+rotate_vertices_y(folder_path, output_folder_path,180)
 # import os
 
 # # Specify the directory containing the .obj files

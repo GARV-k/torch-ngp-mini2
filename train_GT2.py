@@ -59,11 +59,11 @@ if __name__ == '__main__':
     hashmap_size = 10
     obj_no = 12
 
-    obj_path_pre = 'datasets/rotated_objs_'
+    obj_path_pre = 'datasets/for_4_objs/'
     workspace1 = f'hash_workspace_obj{obj_no}_{n}_{d}_{hashmap_size}/'
-    _n = 2
-    idx_list = [360,180]
-    obj_list = [obj_path_pre+f"{idx}/{obj_no}.obj" for idx in idx_list]
+    _n = 4
+    # idx_list = [360,180]
+    obj_list = [obj_path_pre+f"{idx}.obj" for idx in range(_n)]
     from sdf.network_tcnn import SDFNetwork            
     tcnn_network = tcnn.Network(
                                         n_input_dims=32,
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     # ], lr=lr, betas=(0.9, 0.99), eps=1e-15)
     
     # scheduler = lambda optimizer: optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.5)
-    subset_n = 2
+    subset_n = 4
     trainer = Trainer('ngp', _n, models,workspace=workspace1, enc_optimizer=enc_optimizer,  net_optimizer=net_optimizer, criterion=criterion, ema_decay=0.95, fp16=False, lr_scheduler=None,scheduler_update_every_step=False)
     trainer.train(train_loaders,1000,subset_n)
     # w_state_dict = w.state_dict()
