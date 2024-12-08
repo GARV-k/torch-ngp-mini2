@@ -59,7 +59,7 @@ if __name__ == '__main__':
     hashmap_size = 10
     obj_no = 12
 
-    obj_path_pre = 'datasets/for_4_objs/'
+    obj_path_pre = 'datasets/Exp4/'
     workspace1 = f'hash_workspace_obj{obj_no}_{n}_{d}_{hashmap_size}/'
     _n = 4
     # idx_list = [360,180]
@@ -78,13 +78,14 @@ if __name__ == '__main__':
                                     )
     
     
-    # mlp_state_dict = torch.load('saved_models/mlp.pth')
+    tcnn_network = torch.load(workspace1+'GT_mlp.pth')
     # tcnn_network.load_state_dict(mlp_state_dict)
     models = []
     for idx in range(_n):
         model = SDFNetwork( tcnn_network, encoding="hashgrid",hashmap_size=hashmap_size)
         # enc_state_dict = torch.load(f'saved_models/enc_{idx}.pth')
         # model.encoder.load_state_dict(enc_state_dict)
+        model.encoder = torch.load(workspace1+f'GT_enc_{idx}.pth')
         models.append(model)
     # model2 = SDFNetwork(tcnn_network, encoding="hashgrid") 
     # models = [model, model2]

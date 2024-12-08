@@ -62,8 +62,8 @@ if __name__ == '__main__':
     obj_no = 12
     no_of_rotations = 1
     mode = 'normal'
-    obj_path_pre = 'datasets/for_4_objs/'
-    obj_list = [obj_path_pre+f"{idx}.obj" for idx in [2,3,0,1]]
+    obj_path_pre = 'datasets/Exp4/'
+    obj_list = [obj_path_pre+f"{idx}.obj" for idx in [1,2,3,0]]
     # obj_path_pre_list = [obj_path_pre+'/'
     #                      ,obj_path_pre+'_180/'
     #                     #,obj_path_pre+'_270/'
@@ -90,20 +90,21 @@ if __name__ == '__main__':
     
     dim = models[0].encoder.hash_table.shape[0]	
     print(f'W:{dim}x{dim}')    
-    W = nn.Parameter(torch.randn(dim, dim, device='cuda', requires_grad=True))  #w-commment
+    #W = nn.Parameter(torch.randn(dim, dim, device='cuda', requires_grad=True))  #w-commment
     # N = nn.Parameter(torch.randn(dim, dim2, device='cuda', requires_grad=True))
     # M = nn.Parameter(torch.randn(dim2, dim, device='cuda', requires_grad=True))
     
-    # W = torch.load(workspace1+'W.pth')  
+    W = torch.load(workspace1+'W.pth')  
     
-    lr = 1e-3
+    lr = 1e-4
 
     from sdf.provider import SDFDataset
-    from loss import mape_loss
+    from loss import mape_loss  
     train_datasets = []
     train_loaders = []
     valid_datasets = []
     valid_loaders = []
+    
     # for i in range(_n):
     # for j in range(no_of_rotations):
     #     for i in [obj_no]:

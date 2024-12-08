@@ -2,7 +2,9 @@
 *.log
 *.obj
 *.pth
-
+*.zip
+*.tar
+*.tar.gz
 # Ignore the `node_modules` folder
 
 # Ignore specific file
